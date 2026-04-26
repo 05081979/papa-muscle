@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0e17">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Papa Muscle">
+<title>Papa Muscle - Methode AAA</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:#0a0e17;color:#e8ecf3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100vh;padding-bottom:env(safe-area-inset-bottom)}
+header{background:linear-gradient(135deg,#c8a228 0%,#e8c547 100%);color:#0a0e17;padding:18px 16px calc(18px + env(safe-area-inset-top));position:sticky;top:0;z-index:30;box-shadow:0 4px 12px rgba(0,0,0,.4);padding-top:max(18px,env(safe-area-inset-top))}
+h1{font-size:20px;font-weight:800;letter-spacing:.5px}
+.sub{font-size:11px;font-weight:600;opacity:.85;margin-top:2px}
+.back{background:none;border:none;color:#0a0e17;font-size:22px;font-weight:700;cursor:pointer;margin-right:10px;padding:0;display:none}
+.header-row{display:flex;align-items:center}
+.show .back{display:inline-block}
+
+main{padding:14px 12px 80px}
+.programs{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:600px){.programs{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:900px){.programs{grid-template-columns:repeat(3,1fr)}}
+.card{background:#13171f;border:1px solid #1f2530;border-radius:12px;padding:14px;cursor:pointer;transition:transform .15s,border-color .15s;position:relative;overflow:hidden}
+.card:active{transform:scale(.98)}
+.card.fonte{border-left:4px solid #ef4444}
+.card.elastique{border-left:4px solid #f59e0b}
+.card.pdc{border-left:4px solid #10b981}
+.card-title{font-size:16px;font-weight:700;color:#e8c547;margin-bottom:4px}
+.card-sub{font-size:12px;color:#8594a8;line-height:1.4}
+.card-tag{display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px;margin-top:8px;text-transform:uppercase;letter-spacing:.5px}
+.card.fonte .card-tag{background:#3a1212;color:#fca5a5}
+.card.elastique .card-tag{background:#3a2812;color:#fcd34d}
+.card.pdc .card-tag{background:#0e2a1f;color:#6ee7b7}
+.card-meta{font-size:11px;color:#5e6a7d;margin-top:6px;font-family:monospace}
+
+.sessions{display:grid;grid-template-columns:1fr;gap:8px}
+.session-btn{background:#13171f;border:1px solid #1f2530;border-radius:10px;padding:14px;text-align:left;color:#e8ecf3;cursor:pointer;font-size:15px;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+.session-btn:active{background:#1a1f29}
+.session-btn .arrow{color:#c8a228;font-size:20px}
+.session-progress{font-size:11px;color:#10b981;font-family:monospace;margin-top:4px}
+
+.exercises{display:flex;flex-direction:column;gap:10px}
+.exercise{background:#13171f;border:1px solid #1f2530;border-radius:12px;padding:14px;transition:border-color .2s}
+.exercise.done{border-color:#10b981;background:#0e2a1f}
+.exo-top{display:flex;align-items:flex-start;gap:10px}
+.exo-check{width:28px;height:28px;border:2px solid #3a4456;border-radius:8px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;background:#0a0e17;font-size:18px;color:#10b981;transition:all .15s}
+.exo-check.done{background:#10b981;border-color:#10b981;color:#0a0e17}
+.exo-check.done::after{content:'✓';font-weight:900}
+.exo-info{flex:1;min-width:0}
+.exo-muscle{font-size:11px;color:#c8a228;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.exo-name{font-size:15px;font-weight:600;margin:2px 0 6px;line-height:1.3}
+.exo-meta{display:flex;flex-wrap:wrap;gap:6px;font-size:11px;font-family:monospace}
+.exo-meta span{background:#1a1f29;padding:3px 8px;border-radius:6px;color:#cbd5e1}
+.exo-meta span.sets{color:#fcd34d}
+.exo-meta span.rest{color:#a5b4fc}
+.exo-actions{display:flex;gap:8px;margin-top:10px}
+.btn{flex:1;background:#1a1f29;border:1px solid #2a3140;border-radius:8px;color:#e8ecf3;padding:10px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn:active{background:#252b38}
+.btn.primary{background:#c8a228;color:#0a0e17;border-color:#c8a228}
+.btn.primary:active{background:#b18a1f}
+.btn .ic{font-size:16px}
+
+.timer-overlay{position:fixed;inset:0;background:rgba(10,14,23,.95);display:none;align-items:center;justify-content:center;z-index:50;flex-direction:column;padding:20px;backdrop-filter:blur(8px)}
+.timer-overlay.show{display:flex}
+.timer-display{font-size:96px;font-weight:800;font-variant-numeric:tabular-nums;color:#c8a228;letter-spacing:-2px;line-height:1}
+.timer-label{font-size:18px;color:#8594a8;margin-bottom:24px;font-weight:600}
+.timer-actions{display:flex;gap:10px;margin-top:30px;flex-wrap:wrap;justify-content:center}
+.timer-actions .btn{min-width:80px;padding:14px 18px}
+.timer-progress{width:280px;height:6px;background:#1a1f29;border-radius:3px;margin-top:20px;overflow:hidden}
+.timer-progress-bar{height:100%;background:linear-gradient(90deg,#c8a228,#e8c547);border-radius:3px;transition:width 1s linear}
+.timer-actions .btn.danger{background:#7f1d1d;border-color:#7f1d1d;color:#fff}
+
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:#0e1116;border-top:1px solid #1f2530;padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;justify-content:space-between;align-items:center;z-index:20}
+.progress-text{font-size:13px;font-weight:600}
+.reset-btn{background:none;border:1px solid #2a3140;color:#8594a8;font-size:11px;padding:6px 12px;border-radius:6px;cursor:pointer}
+.reset-btn:active{background:#1a1f29}
+
+.intro{background:#13171f;border:1px solid #1f2530;border-radius:12px;padding:14px;margin-bottom:16px;font-size:13px;line-height:1.6;color:#cbd5e1}
+.intro b{color:#c8a228}
+.intro .legend{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+.intro .legend span{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-family:monospace}
+.intro .dot{width:10px;height:10px;border-radius:2px}
+.dot.fonte{background:#ef4444}
+.dot.elastique{background:#f59e0b}
+.dot.pdc{background:#10b981}
+
+.install-tip{position:fixed;bottom:60px;left:14px;right:14px;background:#1a1f29;border:1px solid #c8a228;border-radius:10px;padding:12px;font-size:12px;display:none;align-items:center;gap:10px;z-index:25}
+.install-tip.show{display:flex}
+.install-tip .close{background:none;border:none;color:#8594a8;cursor:pointer;font-size:16px;padding:0;margin-left:auto}
+.install-tip button.add{background:#c8a228;color:#0a0e17;border:none;border-radius:6px;padding:6px 12px;font-weight:700;cursor:pointer}
+
+.empty{text-align:center;padding:40px 20px;color:#5e6a7d}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-row">
+    <button class="back" onclick="goBack()">←</button>
+    <div>
+      <h1 id="title">Papa Muscle</h1>
+      <div class="sub" id="subtitle">Methode AAA - Anywhere, Anytime, Anything</div>
+    </div>
+  </div>
+</header>
+
+<main id="main"></main>
+
+<div class="bottom-bar">
+  <div class="progress-text" id="progressText">-</div>
+  <button class="reset-btn" onclick="resetCurrent()">Reset</button>
+</div>
+
+<div class="install-tip" id="installTip">
+  <span>Installer sur ton ecran d'accueil ?</span>
+  <button class="add" onclick="installPwa()">Installer</button>
+  <button class="close" onclick="dismissInstall()">×</button>
+</div>
+
+<div class="timer-overlay" id="timerOverlay">
+  <div class="timer-label" id="timerLabel">Temps de repos</div>
+  <div class="timer-display" id="timerDisplay">02:00</div>
+  <div class="timer-progress"><div class="timer-progress-bar" id="timerBar"></div></div>
+  <div class="timer-actions">
+    <button class="btn" onclick="adjustTimer(-15)">-15s</button>
+    <button class="btn primary" onclick="toggleTimer()" id="timerToggle">Pause</button>
+    <button class="btn" onclick="adjustTimer(15)">+15s</button>
+    <button class="btn danger" onclick="closeTimer()">Stop</button>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+// ============ STATE ============
+const state = {
+  view: 'home',  // home | sessions | exercises
+  programId: null,
+  sessionIdx: null,
+  done: JSON.parse(localStorage.getItem('pm_done') || '{}'),
+  prefs: JSON.parse(localStorage.getItem('pm_prefs') || '{"defaultRest":120}')
+};
+let timer = { active: false, remaining: 0, total: 0, paused: false, intervalId: null, audio: null };
+let deferredPrompt = null;
+
+// ============ HELPERS ============
+function save() {
+  localStorage.setItem('pm_done', JSON.stringify(state.done));
+  localStorage.setItem('pm_prefs', JSON.stringify(state.prefs));
+}
+
+function exoKey(progId, sessIdx, exoIdx) {
+  return `${progId}|${sessIdx}|${exoIdx}`;
+}
+
+function isDone(progId, sessIdx, exoIdx) {
+  return !!state.done[exoKey(progId, sessIdx, exoIdx)];
+}
+
+function setDone(progId, sessIdx, exoIdx, val) {
+  const k = exoKey(progId, sessIdx, exoIdx);
+  if (val) state.done[k] = Date.now();
+  else delete state.done[k];
+  save();
+}
+
+function sessionProgress(progId, sessIdx) {
+  const prog = PROGRAMS.find(p => p.id === progId);
+  if (!prog) return { done: 0, total: 0 };
+  const sess = prog.sessions[sessIdx];
+  const total = sess.exercises.length;
+  let done = 0;
+  for (let i = 0; i < total; i++) if (isDone(progId, sessIdx, i)) done++;
+  return { done, total };
+}
+
+function programProgress(progId) {
+  const prog = PROGRAMS.find(p => p.id === progId);
+  if (!prog) return { done: 0, total: 0 };
+  let done = 0, total = 0;
+  prog.sessions.forEach((s, idx) => {
+    total += s.exercises.length;
+    s.exercises.forEach((_, ei) => { if (isDone(progId, idx, ei)) done++; });
+  });
+  return { done, total };
+}
+
+// ============ VIEWS ============
+function render() {
+  const main = document.getElementById('main');
+  const title = document.getElementById('title');
+  const sub = document.getElementById('subtitle');
+  document.body.classList.toggle('show', state.view !== 'home');
+
+  if (state.view === 'home') {
+    title.textContent = 'Papa Muscle';
+    sub.textContent = 'Methode AAA - 9 programmes adaptatifs';
+    renderHome(main);
+  } else if (state.view === 'sessions') {
+    const prog = PROGRAMS.find(p => p.id === state.programId);
+    title.textContent = prog.name;
+    sub.textContent = prog.subtitle;
+    renderSessions(main, prog);
+  } else if (state.view === 'exercises') {
+    const prog = PROGRAMS.find(p => p.id === state.programId);
+    const sess = prog.sessions[state.sessionIdx];
+    title.textContent = sess.name;
+    sub.textContent = prog.name;
+    renderExercises(main, prog, sess);
+  }
+  updateProgressBar();
+}
+
+function renderHome(main) {
+  const grid = PROGRAMS.map(p => {
+    const pp = programProgress(p.id);
+    const pct = pp.total ? Math.round(pp.done / pp.total * 100) : 0;
+    const tagText = p.type === 'fonte' ? 'Fonte' : p.type === 'elastique' ? 'Elastique' : 'Poids du corps';
+    return `<div class="card ${p.type}" onclick="openProgram('${p.id}')">
+      <div class="card-title">${p.name}</div>
+      <div class="card-sub">${p.subtitle}</div>
+      <div class="card-tag">${tagText}</div>
+      <div class="card-meta">${p.sessions.length} seances - ${pp.done}/${pp.total} fait (${pct}%)</div>
+    </div>`;
+  }).join('');
+  main.innerHTML = `
+    <div class="intro">
+      <b>9 programmes</b> adaptatifs (3, 4 ou 5 jours par semaine), avec 3 versions selon ton materiel.
+      <div class="legend">
+        <span><span class="dot fonte"></span>Fonte (haltere/barre/machine)</span>
+        <span><span class="dot elastique"></span>Elastique (bandes)</span>
+        <span><span class="dot pdc"></span>Poids du corps (sans materiel)</span>
+      </div>
+    </div>
+    <div class="programs">${grid}</div>
+  `;
+}
+
+function renderSessions(main, prog) {
+  const list = prog.sessions.map((s, idx) => {
+    const sp = sessionProgress(prog.id, idx);
+    const pct = sp.total ? Math.round(sp.done / sp.total * 100) : 0;
+    return `<button class="session-btn" onclick="openSession(${idx})">
+      <div>
+        <div>${s.name}</div>
+        <div class="session-progress">${sp.done}/${sp.total} exercices - ${pct}%</div>
+      </div>
+      <span class="arrow">›</span>
+    </button>`;
+  }).join('');
+  main.innerHTML = `<div class="sessions">${list}</div>`;
+}
+
+function renderExercises(main, prog, sess) {
+  const items = sess.exercises.map((e, idx) => {
+    const done = isDone(prog.id, state.sessionIdx, idx);
+    const yt = encodeURIComponent(e.exo + ' ' + (prog.type === 'fonte' ? 'haltere' : prog.type === 'elastique' ? 'elastique' : 'sans materiel'));
+    return `<div class="exercise ${done ? 'done' : ''}" id="exo-${idx}">
+      <div class="exo-top">
+        <div class="exo-check ${done ? 'done' : ''}" onclick="toggleDone(${idx})"></div>
+        <div class="exo-info">
+          <div class="exo-muscle">${e.muscle}</div>
+          <div class="exo-name">${e.exo}</div>
+          <div class="exo-meta">
+            <span class="sets">${e.sets}</span>
+            <span class="rest">repos ${e.rest}</span>
+          </div>
+        </div>
+      </div>
+      <div class="exo-actions">
+        <button class="btn primary" onclick="startTimer(${parseRestSeconds('${e.rest}')}, '${e.exo.replace(/'/g, "\\'")}')">
+          <span class="ic">⏱</span>Timer repos
+        </button>
+        <a class="btn" href="https://www.youtube.com/results?search_query=${yt}" target="_blank" rel="noopener">
+          <span class="ic">▶</span>Video
+        </a>
+      </div>
+    </div>`;
+  }).join('');
+  main.innerHTML = `<div class="exercises">${items}</div>`;
+}
+
+function parseRestSeconds(rest) {
+  // "1min - 3min" -> 120 (mid), "1min" -> 60
+  const m = rest.match(/(\d+)\s*min/g);
+  if (!m) return 60;
+  if (m.length === 2) {
+    const a = parseInt(m[0]) * 60, b = parseInt(m[1]) * 60;
+    return Math.round((a + b) / 2);
+  }
+  return parseInt(m[0]) * 60;
+}
+
+// ============ NAVIGATION ============
+function openProgram(id) { state.view = 'sessions'; state.programId = id; render(); window.scrollTo(0,0); }
+function openSession(idx) { state.view = 'exercises'; state.sessionIdx = idx; render(); window.scrollTo(0,0); }
+function goBack() {
+  if (state.view === 'exercises') { state.view = 'sessions'; state.sessionIdx = null; }
+  else if (state.view === 'sessions') { state.view = 'home'; state.programId = null; }
+  render();
+}
+
+function toggleDone(idx) {
+  const cur = isDone(state.programId, state.sessionIdx, idx);
+  setDone(state.programId, state.sessionIdx, idx, !cur);
+  render();
+  if (!cur && navigator.vibrate) navigator.vibrate(50);
+}
+
+function resetCurrent() {
+  if (state.view === 'exercises') {
+    if (!confirm('Reset cette seance ?')) return;
+    const prog = PROGRAMS.find(p => p.id === state.programId);
+    prog.sessions[state.sessionIdx].exercises.forEach((_, i) => setDone(state.programId, state.sessionIdx, i, false));
+  } else if (state.view === 'sessions') {
+    if (!confirm('Reset tout le programme ?')) return;
+    const prog = PROGRAMS.find(p => p.id === state.programId);
+    prog.sessions.forEach((s, si) => s.exercises.forEach((_, ei) => setDone(state.programId, si, ei, false)));
+  } else {
+    if (!confirm('Reset TOUTE la progression ?')) return;
+    state.done = {}; save();
+  }
+  render();
+}
+
+function updateProgressBar() {
+  const el = document.getElementById('progressText');
+  if (state.view === 'home') {
+    let total = 0, done = 0;
+    PROGRAMS.forEach(p => { const pp = programProgress(p.id); total += pp.total; done += pp.done; });
+    el.textContent = `Total : ${done}/${total}`;
+  } else if (state.view === 'sessions') {
+    const pp = programProgress(state.programId);
+    el.textContent = `Programme : ${pp.done}/${pp.total}`;
+  } else {
+    const sp = sessionProgress(state.programId, state.sessionIdx);
+    el.textContent = `Seance : ${sp.done}/${sp.total}`;
+  }
+}
+
+// ============ TIMER ============
+function startTimer(seconds, label) {
+  timer.total = seconds;
+  timer.remaining = seconds;
+  timer.paused = false;
+  timer.active = true;
+  document.getElementById('timerLabel').textContent = 'Repos - ' + (label || '');
+  document.getElementById('timerOverlay').classList.add('show');
+  document.getElementById('timerToggle').textContent = 'Pause';
+  if (timer.intervalId) clearInterval(timer.intervalId);
+  timer.intervalId = setInterval(tickTimer, 1000);
+  drawTimer();
+  if (navigator.wakeLock) navigator.wakeLock.request('screen').catch(()=>{});
+}
+
+function tickTimer() {
+  if (timer.paused) return;
+  timer.remaining--;
+  if (timer.remaining <= 0) {
+    timer.remaining = 0;
+    drawTimer();
+    finishTimer();
+    return;
+  }
+  drawTimer();
+}
+
+function drawTimer() {
+  const m = Math.floor(timer.remaining / 60);
+  const s = timer.remaining % 60;
+  document.getElementById('timerDisplay').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  const pct = timer.total ? (1 - timer.remaining / timer.total) * 100 : 0;
+  document.getElementById('timerBar').style.width = pct + '%';
+}
+
+function finishTimer() {
+  if (timer.intervalId) { clearInterval(timer.intervalId); timer.intervalId = null; }
+  // Beep + vibration
+  if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 400]);
+  beep();
+  document.getElementById('timerLabel').textContent = 'Termine !';
+  setTimeout(() => closeTimer(), 1500);
+}
+
+function beep() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.frequency.value = 880;
+    o.type = 'sine';
+    g.gain.setValueAtTime(.3, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + .8);
+    o.start();
+    o.stop(ctx.currentTime + .8);
+  } catch(e) {}
+}
+
+function toggleTimer() {
+  timer.paused = !timer.paused;
+  document.getElementById('timerToggle').textContent = timer.paused ? 'Reprendre' : 'Pause';
+}
+
+function adjustTimer(delta) {
+  timer.remaining = Math.max(0, timer.remaining + delta);
+  if (delta > 0) timer.total += delta;
+  drawTimer();
+}
+
+function closeTimer() {
+  if (timer.intervalId) clearInterval(timer.intervalId);
+  timer.active = false;
+  timer.intervalId = null;
+  document.getElementById('timerOverlay').classList.remove('show');
+}
+
+// ============ PWA INSTALL ============
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  if (!localStorage.getItem('pm_install_dismissed')) {
+    document.getElementById('installTip').classList.add('show');
+  }
+});
+
+function installPwa() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => {
+      deferredPrompt = null;
+      document.getElementById('installTip').classList.remove('show');
+    });
+  }
+}
+
+function dismissInstall() {
+  localStorage.setItem('pm_install_dismissed', '1');
+  document.getElementById('installTip').classList.remove('show');
+}
+
+// Service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+
+// Back button (Android)
+window.addEventListener('popstate', () => {
+  if (state.view !== 'home') goBack();
+});
+
+render();
+</script>
+</body>
+</html>
