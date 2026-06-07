@@ -1,4 +1,4 @@
-const CACHE = 'papa-muscle-v1';
+const CACHE = 'papa-muscle-v2';
 const ASSETS = [
   './',
   './index.html',
