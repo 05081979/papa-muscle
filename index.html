@@ -58,6 +58,8 @@ main{padding:14px 12px 80px}
 .exo-meta span{background:#1a1f29;padding:3px 8px;border-radius:6px;color:#cbd5e1}
 .exo-meta span.sets{color:#fcd34d}
 .exo-meta span.rest{color:#a5b4fc}
+.build{margin-top:8px;font-size:10px;font-family:monospace;color:#64748b;letter-spacing:.5px}
+.exo-note{margin-top:7px;font-size:11.5px;line-height:1.45;color:#fcd34d;background:#241f13;border-left:2px solid #b4881f;padding:6px 9px;border-radius:0 6px 6px 0}
 .exo-actions{display:flex;gap:8px;margin-top:10px}
 .btn{flex:1;background:#1a1f29;border:1px solid #2a3140;border-radius:8px;color:#e8ecf3;padding:10px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
 .btn:active{background:#252b38}
@@ -233,7 +235,7 @@ function render() {
 
   if (state.view === 'home') {
     title.textContent = 'Papa Muscle';
-    sub.textContent = 'Methode AAA - 9 programmes adaptatifs';
+    sub.textContent = 'Methode AAA - ' + PROGRAMS.length + ' programmes';
     renderHome(main);
   } else if (state.view === 'hiit') {
     title.textContent = 'HIIT Cardio';
@@ -272,7 +274,8 @@ function renderHome(main) {
       <div class="s">Entrainements cardio avec chrono d'intervalles (effort / repos) →</div>
     </button>
     <div class="intro">
-      <b>9 programmes</b> adaptatifs (3, 4 ou 5 jours par semaine), avec 3 versions selon ton materiel.
+      <b>${PROGRAMS.length} programmes</b> : le tien en premier, puis les 9 de la Methode AAA (3, 4 ou 5 jours par semaine, 3 versions selon le materiel).
+      <div class="build">version du 16/08/2026 15:22</div>
       <div class="legend">
         <span><span class="dot fonte"></span>Fonte (haltere/barre/machine)</span>
         <span><span class="dot elastique"></span>Elastique (bandes)</span>
@@ -314,6 +317,7 @@ function renderExercises(main, prog, sess) {
             <span class="sets">${e.sets}</span>
             <span class="rest">repos ${e.rest}</span>
           </div>
+          ${e.note ? `<div class="exo-note">${e.note}</div>` : ''}
         </div>
       </div>
       <div class="exo-actions">
@@ -330,14 +334,22 @@ function renderExercises(main, prog, sess) {
 }
 
 function parseRestSeconds(rest) {
-  // "1min - 3min" -> 120 (mid), "1min" -> 60
-  const m = rest.match(/(\d+)\s*min/g);
-  if (!m) return 60;
-  if (m.length === 2) {
-    const a = parseInt(m[0]) * 60, b = parseInt(m[1]) * 60;
-    return Math.round((a + b) / 2);
+  // "1min - 3min" -> 120 (milieu)  ·  "1min" -> 60
+  // Ajout : les repos ecrits en SECONDES. "90-120 s" -> 105, "90 s" -> 90.
+  // Sans cela tout repos en secondes retombait sur les 60 s par defaut.
+  const min = rest.match(/(\d+)\s*min/g);
+  if (min) {
+    if (min.length === 2) {
+      const a = parseInt(min[0]) * 60, b = parseInt(min[1]) * 60;
+      return Math.round((a + b) / 2);
+    }
+    return parseInt(min[0]) * 60;
   }
-  return parseInt(m[0]) * 60;
+  const sec = rest.match(/\d+/g);
+  if (sec) return sec.length >= 2
+    ? Math.round((parseInt(sec[0]) + parseInt(sec[1])) / 2)
+    : parseInt(sec[0]);
+  return 60;
 }
 
 // ============ NAVIGATION ============

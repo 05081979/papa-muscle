@@ -1,6 +1,39 @@
 // Donnees extraites du PDF "programmes-gratuits-papa-muscle.pdf" (Methode AAA - Papa Muscle)
 const PROGRAMS = [
   {
+    id: 'perso_fullbody_abc',
+    freq: 3,
+    type: 'fonte',
+    name: 'Mon programme - Full Body A/B/C',
+    subtitle: 'Halteres - Tension / Hypertrophie / Volume',
+    sessions: [
+      { name: 'A - Tension', exercises: [
+        { muscle: 'Quadriceps + fessiers', exo: 'Bulgarian split squat halteres', sets: '4 x 8-12 / jambe', rest: '90-120 s' },
+        { muscle: 'Pectoraux', exo: 'Developpe couche halteres', sets: '4 x 8-15', rest: '2 min', note: 'Avec tes 34 kg, tu peux rester actuellement sur ton 4 x 12.' },
+        { muscle: 'Dos', exo: 'Rowing halteres', sets: '4 x 8-15', rest: '90-120 s' },
+        { muscle: 'Ischios + fessiers', exo: 'Souleve de terre roumain halteres', sets: '4 x 8-15', rest: '2 min' },
+        { muscle: 'Epaules', exo: 'Elevations laterales', sets: '4 x 12-20', rest: '60-90 s' },
+        { muscle: 'Biceps + triceps', exo: 'Curl + extension triceps en biset', sets: '4 x 10-15 chacun', rest: '60-90 s' },
+      ]},
+      { name: 'B - Hypertrophie', exercises: [
+        { muscle: 'Quadriceps', exo: 'Goblet squat / squat halteres', sets: '4 x 12-20', rest: '90-120 s' },
+        { muscle: 'Pectoraux (haut)', exo: 'Developpe incline halteres', sets: '4 x 8-15', rest: '2 min' },
+        { muscle: 'Dos', exo: 'Rowing unilateral haltere', sets: '4 x 10-15 / cote', rest: '90 s' },
+        { muscle: 'Quadriceps + fessiers', exo: 'Fentes arriere halteres', sets: '4 x 10-15 / jambe', rest: '90-120 s' },
+        { muscle: 'Epaules', exo: 'Elevations laterales', sets: '4 x 15-20', rest: '60-90 s' },
+        { muscle: 'Biceps + triceps', exo: 'Curl marteau + triceps en biset', sets: '4 x 10-15 chacun', rest: '60-90 s' },
+      ]},
+      { name: 'C - Volume / charges limitees', exercises: [
+        { muscle: 'Quadriceps + fessiers', exo: 'Bulgarian split squat', sets: '4 x 12-15 / jambe', rest: '90 s' },
+        { muscle: 'Pectoraux', exo: 'Developpe couche halteres', sets: '4 x 12-15', rest: '90-120 s' },
+        { muscle: 'Dos', exo: 'Rowing poitrine appuyee', sets: '4 x 12-15', rest: '90 s' },
+        { muscle: 'Fessiers', exo: 'Hip thrust haltere', sets: '4 x 12-20', rest: '90 s' },
+        { muscle: 'Epaules', exo: 'Elevations laterales', sets: '4 x 15-25', rest: '60 s' },
+        { muscle: 'Biceps + triceps', exo: 'Curl + triceps en biset', sets: '4 x 12-20 chacun', rest: '60-90 s' },
+      ]},
+    ],
+  },
+  {
     id: '3j_fonte',
     freq: 3,
     type: 'fonte',

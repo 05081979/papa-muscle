@@ -1,4 +1,8 @@
-const CACHE = 'papa-muscle-v2';
+const CACHE = 'papa-muscle-v3';
+// v3 - 16/08/2026 : ajout du programme Full Body A/B/C.
+// ⚑ Ce cache est CACHE-FIRST : sans bump de version, l'appli installee
+//   continue de servir l'ancien index.html / data.js indefiniment, meme
+//   apres un nouveau deploiement. Bumper A CHAQUE changement de contenu.
 const ASSETS = [
   './',
   './index.html',
