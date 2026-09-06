@@ -30,12 +30,14 @@ main{padding:14px 12px 80px}
 .card.fonte{border-left:4px solid #ef4444}
 .card.elastique{border-left:4px solid #f59e0b}
 .card.pdc{border-left:4px solid #10b981}
+.card.etirement{border-left:4px solid #8b5cf6}
 .card-title{font-size:16px;font-weight:700;color:#e8c547;margin-bottom:4px}
 .card-sub{font-size:12px;color:#8594a8;line-height:1.4}
 .card-tag{display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px;margin-top:8px;text-transform:uppercase;letter-spacing:.5px}
 .card.fonte .card-tag{background:#3a1212;color:#fca5a5}
 .card.elastique .card-tag{background:#3a2812;color:#fcd34d}
 .card.pdc .card-tag{background:#0e2a1f;color:#6ee7b7}
+.card.etirement .card-tag{background:#241a3a;color:#c4b5fd}
 .card-meta{font-size:11px;color:#5e6a7d;margin-top:6px;font-family:monospace}
 
 .sessions{display:grid;grid-template-columns:1fr;gap:8px}
@@ -90,6 +92,7 @@ main{padding:14px 12px 80px}
 .dot.fonte{background:#ef4444}
 .dot.elastique{background:#f59e0b}
 .dot.pdc{background:#10b981}
+.dot.etirement{background:#8b5cf6}
 
 .install-tip{position:fixed;bottom:60px;left:14px;right:14px;background:#1a1f29;border:1px solid #c8a228;border-radius:10px;padding:12px;font-size:12px;display:none;align-items:center;gap:10px;z-index:25}
 .install-tip.show{display:flex}
@@ -260,7 +263,7 @@ function renderHome(main) {
   const grid = PROGRAMS.map(p => {
     const pp = programProgress(p.id);
     const pct = pp.total ? Math.round(pp.done / pp.total * 100) : 0;
-    const tagText = p.type === 'fonte' ? 'Fonte' : p.type === 'elastique' ? 'Elastique' : 'Poids du corps';
+    const tagText = p.type === 'fonte' ? 'Fonte' : p.type === 'elastique' ? 'Elastique' : p.type === 'etirement' ? 'Etirement' : 'Poids du corps';
     return `<div class="card ${p.type}" onclick="openProgram('${p.id}')">
       <div class="card-title">${p.name}</div>
       <div class="card-sub">${p.subtitle}</div>
@@ -274,12 +277,13 @@ function renderHome(main) {
       <div class="s">Entrainements cardio avec chrono d'intervalles (effort / repos) →</div>
     </button>
     <div class="intro">
-      <b>${PROGRAMS.length} programmes</b> : le tien en premier, puis les 9 de la Methode AAA (3, 4 ou 5 jours par semaine, 3 versions selon le materiel).
-      <div class="build">version du 16/08/2026 15:22</div>
+      <b>${PROGRAMS.length} programmes</b> : les tiens en premier (Full Body A/B/C, Half A/B, et les 3 seances d etirement), puis les 9 de la Methode AAA.
+      <div class="build">version du 06/09/2026 21:23</div>
       <div class="legend">
         <span><span class="dot fonte"></span>Fonte (haltere/barre/machine)</span>
         <span><span class="dot elastique"></span>Elastique (bandes)</span>
         <span><span class="dot pdc"></span>Poids du corps (sans materiel)</span>
+        <span><span class="dot etirement"></span>Etirement (souplesse et mobilite)</span>
       </div>
     </div>
     <div class="programs">${grid}</div>
@@ -304,7 +308,7 @@ function renderSessions(main, prog) {
 function renderExercises(main, prog, sess) {
   const items = sess.exercises.map((e, idx) => {
     const done = isDone(prog.id, state.sessionIdx, idx);
-    const yt = encodeURIComponent(e.exo + ' ' + (prog.type === 'fonte' ? 'haltere' : prog.type === 'elastique' ? 'elastique' : 'sans materiel'));
+    const yt = encodeURIComponent(e.exo + ' ' + (prog.type === 'fonte' ? 'haltere' : prog.type === 'elastique' ? 'elastique' : prog.type === 'etirement' ? 'etirement kine' : 'sans materiel'));
     const restSec = parseRestSeconds(e.rest);
     const exoEsc = e.exo.replace(/'/g, "\\'");
     return `<div class="exercise ${done ? 'done' : ''}" id="exo-${idx}">
@@ -315,14 +319,14 @@ function renderExercises(main, prog, sess) {
           <div class="exo-name">${e.exo}</div>
           <div class="exo-meta">
             <span class="sets">${e.sets}</span>
-            <span class="rest">repos ${e.rest}</span>
+            <span class="rest">${prog.type === 'etirement' ? 'tenue' : 'repos'} ${e.rest}</span>
           </div>
           ${e.note ? `<div class="exo-note">${e.note}</div>` : ''}
         </div>
       </div>
       <div class="exo-actions">
         <button class="btn primary" onclick="startTimer(${restSec}, '${exoEsc}')">
-          <span class="ic">⏱</span>Timer repos
+          <span class="ic">⏱</span>Timer ${prog.type === 'etirement' ? 'tenue' : 'repos'}
         </button>
         <a class="btn" href="https://www.youtube.com/results?search_query=${yt}" target="_blank" rel="noopener">
           <span class="ic">▶</span>Video
