@@ -167,6 +167,23 @@ const PROGRAMS = [
     ],
   },
   {
+    id: 'perso_6_fuites_energie',
+    freq: 7,
+    type: 'energie',
+    name: 'Les 6 fuites d energie',
+    subtitle: 'Pratiques taoistes : souffle, emotions, dantian, orbite, jing, tensions',
+    sessions: [
+      { name: 'Les 6 fuites - une par jour ou toutes', exercises: [
+        { muscle: 'Fuite 1 - la respiration', exo: 'Respiration abdominale 4-1-6', sets: '10 respirations', rest: '2 min', note: 'Inspirer par le nez 4 s, le VENTRE se gonfle (pas la poitrine). Retenir 1 s. Expirer par le nez 6 s, le ventre redescend comme si on poussait l air depuis le nombril. Vers la 5e-6e respiration, le corps se detend.' },
+        { muscle: 'Fuite 2 - les emotions avalees', exo: 'Liberer l emotion retenue', sets: 'quelques minutes', rest: '3 min', note: 'Reperer ou est la tension (poitrine, estomac, machoire). Respirer vers cet endroit avec la respiration abdominale. A chaque expiration, l emotion sort comme une fumee sombre. Foie = colere, poumons = tristesse, reins = peur, coeur = anxiete, rate/estomac = rumination.' },
+        { muscle: 'Fuite 3 - le dantian', exo: 'Sourire au dantian', sets: 'tous les jours', rest: '3 min', note: 'Assis, yeux fermes. Trois doigts sous le nombril : y diriger un leger sourire interieur et respirer vers lui avec le ventre. Ne forcer aucune sensation. Avec le temps : une douce chaleur, comme un petit soleil.' },
+        { muscle: 'Fuite 4 - la circulation', exo: 'Orbite microcosmique', sets: 'apres quelques respirations abdominales', rest: '3 min', note: 'EXPIRATION : l energie remonte le long de la colonne, de la base jusqu au sommet de la tete. INSPIRATION : elle redescend par l avant du corps, du front jusqu au dantian. La ou va l esprit, l energie suit. Vannes a surveiller : base de la colonne, entre les omoplates, base du crane, avant du cou.' },
+        { muscle: 'Fuite 5 - le jing (la reserve)', exo: 'Preserver le jing', sets: 'au quotidien', rest: '1 min', note: 'Pas un exercice de tapis : 8 h de vrai sommeil, une journee de silence loin des ecrans, reconnaitre quand le corps doit recuperer. Energie sexuelle : ni repression ni abstinence, mais preservation consciente.' },
+        { muscle: 'Fuite 6 - la rigidite', exo: 'Scan des tensions inutiles', sets: 'plusieurs fois par jour', rest: '1 min', note: 'Parcourir le corps : front, machoire, cou, epaules, mains, abdomen. Pour chaque zone : ce muscle a-t-il besoin d etre tendu maintenant ? Le plus souvent non, et l attention suffit a le relacher.' },
+      ]},
+    ],
+  },
+  {
     id: '3j_fonte',
     freq: 3,
     type: 'fonte',
