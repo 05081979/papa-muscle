@@ -1,6 +1,66 @@
 // Donnees extraites du PDF "programmes-gratuits-papa-muscle.pdf" (Methode AAA - Papa Muscle)
 const PROGRAMS = [
   {
+    id: 'perso_mds120_phase1',
+    freq: 6,
+    type: 'endurance',
+    name: 'Preparation MDS 120 - Phase 1',
+    subtitle: '4 semaines : base d endurance marche + 4 half body (tapis 0 % / 8 %, foret)',
+    sessions: [
+      { name: 'Lundi - Haut du corps + tapis plat', exercises: [
+        { muscle: 'Pectoraux', exo: 'Developpe couche halteres', sets: '4 x 6-10', rest: '90 s' },
+        { muscle: 'Epaules', exo: 'Developpe epaules halteres', sets: '3 x 8-12', rest: '90 s' },
+        { muscle: 'Dos', exo: 'Tirage vertical elastique', sets: '4 x 10-15', rest: '90 s' },
+        { muscle: 'Epaules', exo: 'Elevations laterales', sets: '3 x 12-20', rest: '90 s' },
+        { muscle: 'Biceps', exo: 'Curl halteres', sets: '3 x 8-12', rest: '90 s' },
+        { muscle: 'Triceps', exo: 'Extension triceps elastique', sets: '3 x 10-15', rest: '90 s' },
+        { muscle: 'Endurance - tapis plat', exo: 'Marche sur tapis a 0 %', sets: 'S1 30 min - S2 35 - S3 40 - S4 30 (allegee)', rest: '30min', note: 'Endurance facile. Vitesse indicative 4 a 5 km/h, a ajuster pour pouvoir parler normalement. Timer = duree de la semaine 1 : allonger selon la semaine.' },
+      ]},
+      { name: 'Mardi - Bas du corps', exercises: [
+        { muscle: 'Quadriceps + fessiers', exo: 'Bulgarian split squat', sets: '4 x 8-12 / jambe', rest: '90 s', note: 'Seance jambes preservee : pas d echec musculaire systematique, alleger si les marches deviennent difficiles.' },
+        { muscle: 'Ischios + fessiers', exo: 'Souleve de terre roumain halteres', sets: '4 x 8-12', rest: '90 s' },
+        { muscle: 'Dos', exo: 'Rowing haltere unilateral sur banc', sets: '4 x 8-12', rest: '90 s' },
+        { muscle: 'Fessiers', exo: 'Hip thrust sur banc', sets: '3 x 10-15', rest: '90 s' },
+        { muscle: 'Mollets', exo: 'Mollets avec halteres', sets: '3 x 12-20', rest: '90 s' },
+        { muscle: 'Gainage', exo: 'Gainage', sets: '3 x 30-60 s', rest: '90 s' },
+      ]},
+      { name: 'Mercredi - Tapis avec intervalles a 8 %', exercises: [
+        { muscle: 'Echauffement', exo: 'Marche a 0 %', sets: '5 min', rest: '5min' },
+        { muscle: 'Intervalles', exo: '2 min a 8 % puis 3 min a 0 %', sets: '3 repetitions', rest: '5min', note: 'En montee, ralentir assez pour garder une marche stable SANS se suspendre aux poignees. Timer = une repetition (2 + 3 min).' },
+        { muscle: 'Retour au calme', exo: 'Marche a 0 %', sets: '5 min', rest: '5min', note: 'Total 25 min. Progression : S1 25 min - S2 25 - S3 30 - S4 20 (allegee).' },
+      ]},
+      { name: 'Jeudi - Haut du corps', exercises: [
+        { muscle: 'Pectoraux (haut)', exo: 'Developpe incline halteres', sets: '4 x 8-12', rest: '90 s' },
+        { muscle: 'Dos', exo: 'Tirage vertical elastique', sets: '4 x 10-15', rest: '90 s' },
+        { muscle: 'Epaules', exo: 'Arnold press', sets: '3 x 8-12', rest: '90 s' },
+        { muscle: 'Pectoraux', exo: 'Ecartes elastique ou halteres', sets: '3 x 12-15', rest: '90 s' },
+        { muscle: 'Epaules', exo: 'Elevations laterales', sets: '3 x 15-20', rest: '90 s' },
+        { muscle: 'Biceps + triceps', exo: 'Curl marteau + triceps elastique', sets: '3 x 10-15 chacun', rest: '90 s' },
+      ]},
+      { name: 'Vendredi - Bas du corps', exercises: [
+        { muscle: 'Quadriceps', exo: 'Goblet squat haltere ou kettlebell', sets: '4 x 10-15', rest: '90 s', note: 'Seance jambes preservee : pas d echec musculaire systematique, alleger si les marches deviennent difficiles.' },
+        { muscle: 'Quadriceps + fessiers', exo: 'Fentes arriere halteres', sets: '3 x 8-12 / jambe', rest: '90 s' },
+        { muscle: 'Dos', exo: 'Rowing halteres poitrine sur banc incline', sets: '4 x 8-12', rest: '90 s' },
+        { muscle: 'Ischios', exo: 'Souleve de terre roumain', sets: '3 x 10-12', rest: '90 s' },
+        { muscle: 'Fessiers', exo: 'Hip thrust', sets: '3 x 10-15', rest: '90 s' },
+        { muscle: 'Abdos', exo: 'Abdos', sets: '3 series', rest: '90 s' },
+      ]},
+      { name: 'Samedi - Repos', exercises: [
+        { muscle: 'Recuperation', exo: 'Mobilite douce (facultatif)', sets: 'au ressenti', rest: '10min', note: 'Jour de repos : seulement de la mobilite douce si l envie est la (programmes Etirements de l appli).' },
+      ]},
+      { name: 'Dimanche - Foret', exercises: [
+        { muscle: 'Endurance - terrain varie', exo: 'Marche en foret', sets: 'S1 45 min - S2 50 - S3 60 - S4 45 (allegee)', rest: '45min', note: 'Pas de sac lourd pour les premieres sorties : le port de charge viendra progressivement. Timer = duree de la semaine 1.' },
+      ]},
+      { name: 'A lire - progression et consignes', exercises: [
+        { muscle: 'Progression', exo: 'Tapis plat / tapis incline / foret', sets: 'S1 30 / 25 / 45 min - S2 35 / 25 / 50 - S3 40 / 30 / 60 - S4 30 / 20 / 45', rest: '1min', note: 'Indicative : garder les durees de la semaine precedente si la fatigue musculaire ou articulaire augmente. Semaine 4 = semaine allegee.' },
+        { muscle: 'Consigne', exo: 'Pas de course a pied obligatoire', sets: 'ce premier mois', rest: '1min' },
+        { muscle: 'Consigne', exo: 'Arreter ou adapter', sets: 'douleur inhabituelle, vertiges, essoufflement anormal', rest: '1min' },
+        { muscle: 'Consigne', exo: 'Chaleur du desert', sets: 'plus tard', rest: '1min', note: 'L acclimatation viendra plus tard : ne pas chercher a reproduire une chaleur extreme a domicile.' },
+        { muscle: 'Etape suivante', exo: 'Reevaluer apres 4 semaines', sets: 'marches, recuperation, performances', rest: '1min', note: 'Avant d allonger les sorties en foret. Ce programme est une premiere phase : il ne garantit pas la preparation aux 120 km.' },
+      ]},
+    ],
+  },
+  {
     id: 'perso_fullbody_abc',
     freq: 3,
     type: 'fonte',
