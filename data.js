@@ -244,6 +244,55 @@ const PROGRAMS = [
     ],
   },
   {
+    id: 'perso_dos_elastiques',
+    freq: 2,
+    type: 'elastique',
+    name: 'Dos aux elastiques - 6 exercices',
+    subtitle: 'Elastiques avec poignees + ancrage de porte (haut, milieu, bas). 3 series descendantes, elastique de plus en plus fort.',
+    sessions: [
+      { name: 'Seance dos', exercises: [
+        { muscle: 'Dos - grand dorsal (ancrage HAUT)', exo: 'Tirage vertical assis (lat pulldown)', sets: '3 x 15-12-10 reps', rest: '60-90 s', video: 'https://youtube.com/shorts/2mjl-lUlubo', note: 'Assis au sol face a la porte, bras tendus vers le haut. Tirer les poignees vers les epaules en serrant les omoplates vers le bas. Elastiques de la video : 50, 70, 90 lb.' },
+        { muscle: 'Dos - grand dorsal (ancrage HAUT)', exo: 'Pushdown bras tendus (lat pushdown)', sets: '3 x 12-10-8 reps', rest: '60-90 s', video: 'https://youtube.com/shorts/2mjl-lUlubo', note: 'Debout, buste penche en avant, bras tendus. Ramener les mains vers les cuisses sans plier les coudes : ce sont les dorsaux qui travaillent. Elastiques : 20, 30, 50 lb.' },
+        { muscle: 'Haut du dos - rhomboides (ancrage MILIEU)', exo: 'Face pull', sets: '3 x 12-10-8 reps', rest: '60-90 s', video: 'https://youtube.com/shorts/2mjl-lUlubo', note: 'Debout, ancrage a hauteur du visage. Tirer les poignees vers le front, coudes hauts et ecartes, serrer les omoplates. Elastiques : 20, 30, 50 lb.' },
+        { muscle: 'Haut du dos et dorsaux (ancrage BAS)', exo: 'Rowing assis', sets: '3 x 12-10-8 reps', rest: '60-90 s', video: 'https://youtube.com/shorts/2mjl-lUlubo', note: 'Assis au sol, jambes tendues, dos droit. Tirer les poignees vers le ventre, coudes le long du corps. Elastiques : 50, 70, 90 lb.' },
+        { muscle: 'Dorsaux et bas du dos (elastique sous les pieds)', exo: 'Souleve de terre a l elastique', sets: '3 x 12-10-8 reps', rest: '90-120 s', video: 'https://youtube.com/shorts/2mjl-lUlubo', note: 'Pieds sur l elastique, dos plat, on plie aux hanches puis on se redresse en poussant les hanches vers l avant. Elastiques : 70, 90, 120 lb (les plus forts).' },
+        { muscle: 'Dorsaux et haut du dos (elastique sous les pieds)', exo: 'Rowing penche', sets: '3 x 12-10-8 reps', rest: '60-90 s', video: 'https://youtube.com/shorts/2mjl-lUlubo', note: 'Buste penche, dos plat, genoux legerement flechis. Tirer les poignees vers les hanches en serrant les omoplates. Elastiques : 20, 30, 50 lb.' },
+      ]},
+    ],
+  },
+  {
+    id: 'perso_mobilite_hanches_lit',
+    freq: 7,
+    type: 'etirement',
+    name: 'Mobilite dos et hanches - au lit',
+    subtitle: '4 mouvements allonge sur le dos, sans materiel. Le matin au reveil ou le soir, sans meme se lever.',
+    sessions: [
+      { name: 'Routine au lit (enchainer les 4)', exercises: [
+        { muscle: 'Hanches et bas du dos', exo: 'Essuie-glace genoux, pieds ecartes', sets: '30 reps', rest: '30 s', video: 'https://youtube.com/shorts/tAf-0qO9kdQ', note: 'Allonge sur le dos, bras en croix, genoux plies et pieds plus larges que les hanches. Laisser tomber les deux genoux d un cote puis de l autre, en douceur.' },
+        { muscle: 'Hanches (rotation)', exo: 'Jambe croisee vers le cote oppose', sets: '15 reps de chaque cote', rest: '30 s', video: 'https://youtube.com/shorts/tAf-0qO9kdQ', note: 'Allonge, bras en croix. Croiser une jambe par-dessus l autre et amener le genou vers le sol du cote oppose, puis revenir. 15 d un cote, 15 de l autre.' },
+        { muscle: 'Hanches (rotation interne et externe)', exo: 'Jambes tendues, pieds vers l interieur puis l exterieur', sets: '30 reps', rest: '30 s', video: 'https://youtube.com/shorts/tAf-0qO9kdQ', note: 'Allonge, jambes tendues. Tourner les deux jambes depuis la hanche : pointes des pieds vers l interieur, puis vers l exterieur.' },
+        { muscle: 'Bas du dos et hanches', exo: 'Essuie-glace genoux, pieds serres', sets: '30 reps', rest: '30 s', video: 'https://youtube.com/shorts/tAf-0qO9kdQ', note: 'Allonge, genoux plies, pieds et genoux serres. Basculer les deux genoux ensemble d un cote puis de l autre.' },
+      ]},
+    ],
+  },
+  {
+    id: 'perso_respiration_meditation',
+    freq: 7,
+    type: 'energie',
+    name: 'Respiration et meditation',
+    subtitle: 'Coherence cardiaque 3 fois par jour (methode 365) + meditation guidee du matin.',
+    sessions: [
+      { name: 'Coherence cardiaque - 3 fois par jour', exercises: [
+        { muscle: 'Matin', exo: 'Coherence cardiaque 5 min', sets: '6 respirations par minute', rest: '5 min', video: 'https://youtu.be/_mn04Wc-X3o', note: 'Assis, dos droit, jambes decroisees, pieds au sol. Inspirer 5 s, expirer 5 s, par le nez, en gonflant le ventre. Suivre la bulle de la video.' },
+        { muscle: 'Midi', exo: 'Coherence cardiaque 5 min', sets: '6 respirations par minute', rest: '5 min', video: 'https://youtu.be/_mn04Wc-X3o', note: 'Meme exercice. Methode 365 : 3 fois par jour, 6 respirations par minute, 5 minutes.' },
+        { muscle: 'Fin d apres-midi', exo: 'Coherence cardiaque 5 min', sets: '6 respirations par minute', rest: '5 min', video: 'https://youtu.be/_mn04Wc-X3o', note: 'Meme exercice. Les resultats viennent avec la regularite : plusieurs semaines tous les jours.' },
+      ]},
+      { name: 'Meditation du matin', exercises: [
+        { muscle: 'Au reveil', exo: 'Meditation guidee : planter ses intentions du jour', sets: '1 fois le matin', rest: '10 min', video: 'https://youtu.be/ybrIfHYcOwM', note: 'Meditation guidee de 10 min (en anglais). Calmer l esprit, puis poser clairement ses intentions pour la journee.' },
+      ]},
+    ],
+  },
+  {
     id: '3j_fonte',
     freq: 3,
     type: 'fonte',

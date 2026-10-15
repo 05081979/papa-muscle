@@ -336,8 +336,8 @@ function renderExercises(main, prog, sess) {
         <button class="btn primary" onclick="startTimer(${restSec}, '${exoEsc}')">
           <span class="ic">⏱</span>Timer ${prog.type === 'etirement' ? 'tenue' : prog.type === 'energie' ? 'pratique' : prog.type === 'endurance' ? 'duree' : 'repos'}
         </button>
-        <a class="btn" href="https://www.youtube.com/results?search_query=${yt}" target="_blank" rel="noopener">
-          <span class="ic">▶</span>Video
+        <a class="btn" href="${e.video ? e.video : 'https://www.youtube.com/results?search_query=' + yt}" target="_blank" rel="noopener">
+          <span class="ic">▶</span>${e.video ? 'Sa video' : 'Video'}
         </a>
       </div>
     </div>`;
