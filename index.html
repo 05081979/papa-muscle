@@ -106,6 +106,25 @@ main{padding:14px 12px 80px}
 .install-tip button.add{background:#c8a228;color:#0a0e17;border:none;border-radius:6px;padding:6px 12px;font-weight:700;cursor:pointer}
 
 .empty{text-align:center;padding:40px 20px;color:#5e6a7d}
+/* 15/10 : accueil par onglets */
+.onglets{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:0 -12px 14px;padding:4px 12px 6px;position:sticky;top:64px;z-index:10;background:#0a0e17}
+.onglets::-webkit-scrollbar{display:none}
+.onglets button{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;background:#13171f;border:1px solid #1f2530;color:#cbd5e1;border-radius:12px;padding:8px 2px;font-size:11.5px;font-weight:700;cursor:pointer;white-space:nowrap}
+.onglets .oi{font-size:18px;line-height:1}
+.onglets button.on{background:#c8a228;border-color:#c8a228;color:#0a0e17}
+.onglets .on-n{display:none}
+.continuer{width:100%;display:flex;align-items:center;gap:10px;background:#13171f;border:1px solid #c8a228;border-radius:12px;padding:12px 14px;margin-bottom:12px;color:#e8ecf3;cursor:pointer;text-align:left}
+.continuer span:first-child{font-size:11px;font-weight:700;color:#c8a228;text-transform:uppercase;letter-spacing:.5px}
+.continuer b{flex:1;font-size:14px}
+.continuer .arrow{color:#c8a228;font-size:20px}
+.grp{font-size:12px;font-weight:700;color:#8594a8;text-transform:uppercase;letter-spacing:.8px;margin:14px 2px 8px}
+.grp:first-of-type{margin-top:0}
+.card-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px}
+.card-row .card-tag{margin-top:0}
+.card-row .card-meta{margin-top:0}
+.card-bar{height:4px;background:#1a1f29;border-radius:2px;margin-top:8px;overflow:hidden}
+.card-bar > div{height:100%;background:#10b981}
+main > .build{text-align:center;margin-top:18px}
 /* HIIT */
 .hiit-home{display:block;width:100%;text-align:left;background:linear-gradient(135deg,#ef4444,#f59e0b);border:none;border-radius:14px;padding:16px;margin-bottom:16px;cursor:pointer;color:#0a0e17}
 .hiit-home .t{font-size:18px;font-weight:800}
@@ -244,7 +263,7 @@ function render() {
 
   if (state.view === 'home') {
     title.textContent = 'Papa Muscle';
-    sub.textContent = 'Methode AAA - ' + PROGRAMS.length + ' programmes';
+    sub.textContent = PROGRAMS.length + ' programmes - muscu, cardio, mobilite, respiration';
     renderHome(main);
   } else if (state.view === 'hiit') {
     title.textContent = 'HIIT Cardio';
@@ -265,38 +284,57 @@ function render() {
   updateProgressBar();
 }
 
+/* 15/10 : accueil range par onglets (les id ne changent pas : la progression est gardee) */
+const ONGLETS = [
+  { id: 'muscu', nom: 'Muscu', ic: '💪' },
+  { id: 'cardio', nom: 'Cardio', ic: '🔥' },
+  { id: 'mobilite', nom: 'Mobilite', ic: '🧘' },
+  { id: 'respiration', nom: 'Respirer', ic: '🌬' },
+  { id: 'aaa', nom: 'AAA', ic: '📚' },
+];
+function categorie(p) {
+  if (/^[345]j_/.test(p.id)) return 'aaa';
+  if (p.type === 'etirement') return 'mobilite';
+  if (p.type === 'energie') return 'respiration';
+  if (p.type === 'endurance') return 'cardio';
+  return 'muscu';
+}
+function carteProgramme(p) {
+  const pp = programProgress(p.id);
+  const pct = pp.total ? Math.round(pp.done / pp.total * 100) : 0;
+  const tagText = p.type === 'fonte' ? 'Fonte' : p.type === 'elastique' ? 'Elastique' : p.type === 'etirement' ? 'Etirement' : p.type === 'energie' ? 'Energie' : p.type === 'endurance' ? 'Endurance' : 'Poids du corps';
+  return `<div class="card ${p.type}" onclick="openProgram('${p.id}')">
+    <div class="card-title">${p.name}</div>
+    <div class="card-sub">${p.subtitle}</div>
+    <div class="card-row"><span class="card-tag">${tagText}</span>
+      <span class="card-meta">${p.sessions.length} seance${p.sessions.length > 1 ? 's' : ''} · ${pct}%</span></div>
+    ${pct ? `<div class="card-bar"><div style="width:${pct}%"></div></div>` : ''}
+  </div>`;
+}
 function renderHome(main) {
-  const grid = PROGRAMS.map(p => {
-    const pp = programProgress(p.id);
-    const pct = pp.total ? Math.round(pp.done / pp.total * 100) : 0;
-    const tagText = p.type === 'fonte' ? 'Fonte' : p.type === 'elastique' ? 'Elastique' : p.type === 'etirement' ? 'Etirement' : p.type === 'energie' ? 'Energie' : p.type === 'endurance' ? 'Endurance' : 'Poids du corps';
-    return `<div class="card ${p.type}" onclick="openProgram('${p.id}')">
-      <div class="card-title">${p.name}</div>
-      <div class="card-sub">${p.subtitle}</div>
-      <div class="card-tag">${tagText}</div>
-      <div class="card-meta">${p.sessions.length} seances - ${pp.done}/${pp.total} fait (${pct}%)</div>
-    </div>`;
-  }).join('');
-  main.innerHTML = `
-    <button class="hiit-home" onclick="openHiit()">
+  const tab = localStorage.getItem('pm_tab') || 'muscu';
+  const liste = PROGRAMS.filter(p => categorie(p) === tab);
+  let corps;
+  if (tab === 'aaa') {
+    corps = [3, 4, 5].map(n => `<div class="grp">${n} jours par semaine</div>
+      <div class="programs">${liste.filter(p => p.id.startsWith(n + 'j_')).map(carteProgramme).join('')}</div>`).join('');
+  } else {
+    corps = `<div class="programs">${liste.map(carteProgramme).join('')}</div>`;
+  }
+  if (tab === 'cardio') corps = `<button class="hiit-home" onclick="openHiit()">
       <div class="t">🔥 HIIT Cardio</div>
-      <div class="s">Entrainements cardio avec chrono d'intervalles (effort / repos) →</div>
-    </button>
-    <div class="intro">
-      <b>${PROGRAMS.length} programmes</b> : les tiens en premier (Full Body A/B/C, Half A/B, et les 3 seances d etirement), puis les 9 de la Methode AAA.
-      <div class="build">version du 11/10/2026 17:42</div>
-      <div class="legend">
-        <span><span class="dot fonte"></span>Fonte (haltere/barre/machine)</span>
-        <span><span class="dot elastique"></span>Elastique (bandes)</span>
-        <span><span class="dot pdc"></span>Poids du corps (sans materiel)</span>
-        <span><span class="dot etirement"></span>Etirement (souplesse et mobilite)</span>
-        <span><span class="dot energie"></span>Energie (respiration et pratiques taoistes)</span>
-        <span><span class="dot endurance"></span>Endurance (marche, tapis, foret)</span>
-      </div>
-    </div>
-    <div class="programs">${grid}</div>
+      <div class="s">Chrono d'intervalles effort / repos →</div>
+    </button>` + corps;
+  const dernier = PROGRAMS.find(p => p.id === localStorage.getItem('pm_last'));
+  main.innerHTML = `
+    ${dernier ? `<button class="continuer" onclick="openProgram('${dernier.id}')"><span>Continuer</span><b>${dernier.name}</b><span class="arrow">›</span></button>` : ''}
+    <nav class="onglets">${ONGLETS.map(o => `<button class="${o.id === tab ? 'on' : ''}" onclick="choisirOnglet('${o.id}')">
+      <span class="oi">${o.ic}</span>${o.nom}<span class="on-n">${PROGRAMS.filter(p => categorie(p) === o.id).length + (o.id === 'cardio' ? 1 : 0)}</span></button>`).join('')}</nav>
+    ${corps}
+    <div class="build">${PROGRAMS.length} programmes · version du 15/10/2026</div>
   `;
 }
+function choisirOnglet(id) { localStorage.setItem('pm_tab', id); renderHome(document.getElementById('main')); window.scrollTo(0, 0); }
 
 function renderSessions(main, prog) {
   const list = prog.sessions.map((s, idx) => {
@@ -365,7 +403,7 @@ function parseRestSeconds(rest) {
 }
 
 // ============ NAVIGATION ============
-function openProgram(id) { state.view = 'sessions'; state.programId = id; render(); window.scrollTo(0,0); }
+function openProgram(id) { localStorage.setItem('pm_last', id); state.view = 'sessions'; state.programId = id; render(); window.scrollTo(0,0); }
 function openSession(idx) { state.view = 'exercises'; state.sessionIdx = idx; render(); window.scrollTo(0,0); }
 function goBack() {
   if (state.view === 'exercises') { state.view = 'sessions'; state.sessionIdx = null; }
